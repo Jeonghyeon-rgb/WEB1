@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<head>
+  <meta charset="utf-8">
+  <title>WEB1 - HTML</title>
+</head>
+
+<body>
+  <h1><a href="index.html">WEB</a></h1>
+  <ol>
+    <li><a href="1.html">HTML</a></li>
+    <li><a href="2.html">CSS</a></li>
+    <li><a href="3.html">JavaScript</a></li>
+  </ol>
+
+  <ol>
+  <li>Abstract</li>
+  Knowledge
+  Resolt
+  </ol>
+</body>
+
+<body>
+  <h2>HTML이란 무엇인가</h2>
+  <a href="https://www.w3.org" target="_blank", title="HTML5 specificatino">Hypertext Markup Language</a>
+
+  <h3>hello web</h3>
+  Hypertext Markup Language(HTML) is the standard markup language for <strong>creating <U>web</U> pages</strong> and web applications
+  Web browsers receive HTML documnets from a web server or from local storatgte and reender them into moltimedia web pagesHypertext Markup Language 
+  <br>(HTML) is the standard markup language for documents designed to be displayed in a web browser. It defines the content and structure of web content. 
+  <br><br><br>It is often assisted by <p>technologies</p> such as Cascading Style Sheets (CSS) and scripting languages such as JavaScript.
+  <h1>Heading elements</h1>
+  <h2>Summary</h2>
+  <p>Some text here...</p>
+
+  <h2>Examples</h2>
+  <h3>Example 1</h3>
+  <p>Some text here...</p>
+
+  <h3>Example 2</h3>
+  <p>Some text here...</p>
+
+  <h2>See also</h2>
+<p>Some text here...</p>
+
+<img src="connection.png", width="10%">
+
+</body>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>토론 그룹 랜덤 생성기 (2x2)</title>
+<style>
+  :root {
+    --bg: #f7f7fb;
+    --card: #ffffff;
+    --text: #222;
+    --border: #e6e6ef;
+    --accent: #3a6ff8;
+  }
+  body { margin:0; padding:24px; font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Noto Sans KR",sans-serif; background:var(--bg); color:var(--text);}
+  .app { max-width:1100px; margin:0 auto; display:grid; gap:20px; grid-template-columns:360px 1fr; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; }
+  .card-header { padding:14px 16px; border-bottom:1px solid var(--border); font-weight:700; font-size:18px; }
+  .card-body { padding:16px; }
+  .names-list { display:grid; grid-template-columns:minmax(150px,1fr) 250px; gap:12px; align-items:center; }
+  .name-input { width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--border);}
+  .attendance { display:flex; gap:10px; justify-content:flex-start; }
+  .attendance label { display:inline-flex; align-items:center; gap:4px; font-size:14px; padding:6px 10px; border:1px solid var(--border); border-radius:6px; cursor:pointer; white-space:nowrap; }
+  .attendance input { accent-color: var(--accent);}
+  .grid-2x2 { display:grid; grid-template-columns:repeat(2,minmax(220px,1fr)); gap:16px; }
+  .group-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:12px; }
+  .group-card h3 { margin:0 0 8px; font-size:15px; }
+  .badge { display:inline-block; margin:2px; padding:4px 8px; background:#f4f6ff; border:1px dashed #d8defc; border-radius:999px; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="card">
+    <div class="card-header">1) 16명 이름 & 출결</div>
+    <div class="card-body"><div class="names-list" id="namesList"></div></div>
+  </section>
+  <section class="card">
+    <div class="card-header">2) 무작위 3~4인 토론 그룹 
+      <button id="make-groups">그룹 만들기</button> 
+      <button id="reshuffle">다시 섞기</button></div>
+    <div class="card-body">
+      <div id="status" style="margin-bottom:10px; color:#666;">출석 인원 0명 · 그룹 0개</div>
+      <div class="grid-2x2" id="groupsGrid"></div>
+    </div>
+  </section>
+</div>
+<script>
+const names = ["조희헌", "문준호", "나새늘", "임태준", "전성연", "송우연", "최서윤", "이상래", "송윤지", "오초", "김나연", "남윤", "임지우", "한승종", "김나현", "박주하"];
+const N = names.length;
+const namesList=document.getElementById('namesList');
+for(let i=0;i<N;i++){
+  const input=document.createElement('input'); input.className='name-input'; input.value=names[i]; input.id=`name-${i}`;
+  const att=document.createElement('div'); att.className='attendance';
+  att.innerHTML=`<label><input type="radio" name="att-${i}" id="present-${i}" value="present" checked>출석</label>
+                 <label><input type="radio" name="att-${i}" id="absent-${i}" value="absent">결석</label>`;
+  namesList.appendChild(input); namesList.appendChild(att);
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function splitTo34(c){for(let g4=Math.floor(c/4);g4>=0;g4--){let r=c-4*g4;if(r===0)return Array(g4).fill(4);if(r>0&&r%3===0)return[...Array(g4).fill(4),...Array(r/3).fill(3)];}return[c];}
+function readPresentNames(){let p=[];for(let i=0;i<N;i++){let nm=document.getElementById(`name-${i}`).value.trim()||`이름 ${i+1}`;if(document.getElementById(`present-${i}`).checked)p.push(nm);}return p;}
+function renderGroups(gs){const g=document.getElementById('groupsGrid');g.innerHTML='';gs.forEach((m,i)=>{let c=document.createElement('div');c.className='group-card';c.innerHTML=`<h3>그룹 ${i+1} · ${m.length}명</h3>`;m.forEach(x=>{let b=document.createElement('span');b.className='badge';b.textContent=x;c.appendChild(b);});g.appendChild(c);});}
+function makeGroups(){const p=readPresentNames();if(p.length<3){alert('3명 이상 필요합니다');return;}const pool=shuffle([...p]);const sizes=splitTo34(pool.length);let gs=[],idx=0;sizes.forEach(sz=>{gs.push(pool.slice(idx,idx+sz));idx+=sz;});document.getElementById('status').textContent=`출석 인원 ${p.length}명 · 그룹 ${gs.length}개`;renderGroups(gs);}
+document.getElementById('make-groups').onclick=makeGroups;
+document.getElementById('reshuffle').onclick=makeGroups;
+</script>
+</body>
+</html>
